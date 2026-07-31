@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"time"
@@ -72,7 +73,23 @@ func main() {
 	case Search:
 		fmt.Println("TODO: SEARCH")
 	case Shell:
-		fmt.Println("TODO: SHELL")
+		input = ""
+		for i:=1;i<len(args);i++ {
+			input += args[i]+" "
+		}
+		OpenDateAsFile(input)
+		for {
+			// Could prolly do this via Reader, idk.
+			//linereader := bufio.NewReader(os.Stdin)
+			//text, _ := linereader.ReadString('\n')
+			scanner := bufio.NewScanner(os.Stdin)
+			scanner.Scan()
+			text := scanner.Text()
+			if text == "" || text == "." {
+				break
+			}
+			OpenDateAsFile(string(text))
+		}
 	case WebServer:
 		fmt.Println("TODO: SERVER")
 	default:
